@@ -5,11 +5,11 @@ const List = ({ tasks, onToggleComplete, onDelete }) => {
   return (
     <VStack
       w="100%"
-      maxW="700px"
+      maxW={{ base: '80%', md: '600px' }}
       spacing={4}
       align="center"
       mb="50px"
-      height="auto"  // Puedes definir el alto si lo prefieres fijo
+      height="auto" 
     >
       {tasks.length > 0 ? (
         tasks.map((task) => (

@@ -11,18 +11,28 @@ const Item = ({ task, onToggleComplete, onDelete }) => {
       mb={4}
       bg="white"
       display="flex"
+      flexDirection="row" // Mantiene los elementos en fila
       justifyContent="space-between"
-      alignItems="center"
-      width="100%"  // Asegura que ocupe todo el ancho disponible
-      maxW="700px"  // Máximo ancho para todos los elementos
-      height="80px"  // Alto fijo para cada tarea
+      alignItems="flex-start" 
+      width="100%"           
+      maxW="700px"          
+      height="auto"  
     >
-      <Text textDecoration={task.completed ? 'line-through' : 'none'}>
+      {/* Texto de la tarea */}
+      <Text
+        textDecoration={task.completed ? 'line-through' : 'none'}
+        fontWeight={task.completed ? "normal" : "bold"} 
+        color={task.completed ? "gray.500" : "black"} 
+        wordBreak="break-word" 
+        flex="1"          
+        mr={4}        
+      >
         {task.text}
       </Text>
 
+      {/* Botones */}
       <Box display="flex" alignItems="center" gap={2}>
-        {/* Ícono de tilde verde */}
+        {/* Botón para completar */}
         <IconButton
           icon={<CheckIcon />}
           colorScheme={task.completed ? 'green' : 'gray'}
@@ -37,7 +47,7 @@ const Item = ({ task, onToggleComplete, onDelete }) => {
           borderRadius="md"
         />
 
-        {/* Ícono de basurero */}
+        {/* Botón para eliminar */}
         <IconButton
           icon={<DeleteIcon />}
           colorScheme="red"
