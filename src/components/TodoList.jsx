@@ -1,26 +1,63 @@
-import React, { useState } from 'react';
-import { Box, Input, Button, Select, Flex, Stack, Heading, Text } from '@chakra-ui/react';
-import fondo from '../assets/fondo.jpg'; // Importar la imagen de fondo
+import React, { useState, useEffect } from 'react';
+import { Box, Input, Button, Select, Flex, Stack, Heading } from '@chakra-ui/react';
+import fondo from '../assets/fondo.jpg'; // Imagen de fondo
+import List from './List'; // Importamos List, que contiene el renderizado de las tareas
 
-function TodoList({ addTask, filterTasks }) {
+function TodoList() {
   const [task, setTask] = useState('');
+  const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState('all');
+
+  // Cargar tareas desde localStorage al iniciar
+  useEffect(() => {
+    const storedTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (storedTasks) {
+      setTasks(storedTasks);
+    }
+  }, []);
+
+  // Guardar tareas en localStorage cada vez que se actualicen
+  useEffect(() => {
+    if (tasks.length > 0) {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+  }, [tasks]);
 
   const handleSubmit = () => {
     if (task.trim()) {
-      addTask(task);
-      setTask('');
+      const newTask = { id: Date.now(), text: task, completed: false };
+      const updatedTasks = [...tasks, newTask];
+      setTasks(updatedTasks);
+      setTask(''); // Limpiar el input
     }
   };
 
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
-    filterTasks(e.target.value);
   };
+
+  const handleComplete = (id) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+  };
+
+  const handleDelete = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+  };
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'all') return true;
+    if (filter === 'completed') return task.completed;
+    if (filter === 'incomplete') return !task.completed;
+    return true;
+  });
 
   return (
     <>
-      {/* Imagen de fondo borrosa */}
+      {/* Fondo borroso */}
       <Box
         position="fixed"
         top="0"
@@ -28,50 +65,44 @@ function TodoList({ addTask, filterTasks }) {
         right="0"
         bottom="0"
         zIndex="-1"
-        backgroundImage={`url(${fondo})`} // Fondo de la imagen
+        backgroundImage={`url(${fondo})`}
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
-        filter="blur(8px)" // Aplica el desenfoque a la imagen
+        filter="blur(8px)" // Aplica el desenfoque
       />
 
-      {/* Contenedor principal con el formulario */}
+      {/* Contenedor de tareas */}
       <Box
-        minHeight="100vh"  // Asegura que ocupe al menos toda la altura de la pantalla
+        minHeight="100vh"
         display="flex"
         flexDirection="column"
-        justifyContent="space-between"  // Empuja el footer hacia abajo
+        justifyContent="space-between"
         alignItems="center"
         p={6}
+        
       >
-        {/* Título arriba del formulario */}
         <Box textAlign="center" mt={12}>
           <Heading as="h1" size="2xl" color="purple.600" mb={10}>
             Lista de Tareas
           </Heading>
 
-          {/* Contenedor principal con el formulario */}
-          <Stack spacing={8} align="center" justify="center" height="100%">
-            {/* Contenedor para Input y Select alineados */}
+          <Stack spacing={8} align="center" justify="center" height="100%" mb={8}>
             <Flex direction={{ base: 'column', md: 'row' }} gap={4} justify="center" align="center">
               <Input
                 placeholder="Agregar una nueva tarea"
                 value={task}
                 onChange={(e) => setTask(e.target.value)}
                 bg="white"
-                width="400px" /* Input más largo */
-                height="50px" /* Input más alto */
-                _hover={{ borderColor: 'purple.300' }} /* Hover en borde */
-                _focus={{ borderColor: 'purple.500', boxShadow: '0 0 0 2px purple.300' }} /* Focus */
+                width="400px"
+                height="50px"
               />
               <Select
                 onChange={handleFilterChange}
                 bg="white"
-                width="400px" /* Mismo ancho que el Input */
-                height="50px" /* Más alto */
+                width="400px"
+                height="50px"
                 value={filter}
-                _hover={{ borderColor: 'purple.300' }} /* Hover en borde */
-                _focus={{ borderColor: 'purple.500', boxShadow: '0 0 0 2px purple.300' }} /* Focus */
               >
                 <option value="all">Todas</option>
                 <option value="completed">Completas</option>
@@ -79,20 +110,25 @@ function TodoList({ addTask, filterTasks }) {
               </Select>
             </Flex>
 
-            {/* Botón centrado debajo del Input y Select */}
             <Box width="100%" display="flex" justifyContent="center" mt={4}>
               <Button
                 colorScheme="purple"
                 onClick={handleSubmit}
-                width="120px" /* Botón más largo */
-                height="50px" /* Botón más alto */
-                _hover={{ bg: 'purple.300', color: 'white' }} /* Hover */
-                _active={{ bg: 'purple.400', color: 'white' }} /* Active (click) */
+                width="120px"
+                height="50px"
               >
                 Enviar
               </Button>
             </Box>
           </Stack>
+
+          <Box width="100%" display="flex" justifyContent="center" mt={8}>
+            <List
+              tasks={filteredTasks}
+              onToggleComplete={handleComplete}
+              onDelete={handleDelete}
+            />
+          </Box>
         </Box>
       </Box>
     </>
@@ -100,3 +136,4 @@ function TodoList({ addTask, filterTasks }) {
 }
 
 export default TodoList;
+
