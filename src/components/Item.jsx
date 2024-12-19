@@ -11,7 +11,7 @@ const Item = ({ task, onToggleComplete, onDelete }) => {
       mb={4}
       bg="white"
       display="flex"
-      flexDirection="row" // Mantiene los elementos en fila
+      flexDirection="row" 
       justifyContent="space-between"
       alignItems="flex-start" 
       width="100%"           

@@ -10,7 +10,7 @@ function TodoList() {
   const [filter, setFilter] = useState("all");
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [taskToDelete, setTaskToDelete] = useState(null); // Almacena la tarea a eliminar
+  const [taskToDelete, setTaskToDelete] = useState(null); 
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem("tasks"));
@@ -48,14 +48,14 @@ function TodoList() {
   };
 
   const handleDelete = (id) => {
-    setTaskToDelete(id); 
-    setIsModalOpen(true); 
+    setTaskToDelete(id);
+    setIsModalOpen(true);
   };
 
   const confirmDelete = () => {
-    setTasks(tasks.filter((task) => task.id !== taskToDelete)); 
-    setIsModalOpen(false); 
-    setTaskToDelete(null); 
+    setTasks(tasks.filter((task) => task.id !== taskToDelete));
+    setIsModalOpen(false);
+    setTaskToDelete(null);
   };
 
   const filteredTasks = tasks.filter((task) => {
@@ -82,10 +82,11 @@ function TodoList() {
       />
       <VStack
         minHeight="100vh"
-        justifyContent="center"
+        justifyContent="flex-start" 
         alignItems="center"
         spacing={6}
         px={6}
+        overflow="auto" 
       >
         <Heading
           fontSize={{ base: "4xl", sm: "5xl", md: "6xl", lg: "6xl", xl: "6xl" }}
@@ -112,16 +113,16 @@ function TodoList() {
             bg="white"
             padding="10px"
             _hover={{
-              bg: "lavender", 
+              bg: "lavender",
               borderColor: "purple.400",
-              borderWidth: "2px", 
+              borderWidth: "2px",
             }}
             _focus={{
-              bg: "white", 
-              borderColor: "purple.500", 
-              boxShadow: "none", 
+              bg: "white",
+              borderColor: "purple.500",
+              boxShadow: "none",
             }}
-            focusBorderColor="purple.500" 
+            focusBorderColor="purple.500"
             _placeholder={{ color: "gray.500" }}
           />
           <Select
@@ -132,16 +133,16 @@ function TodoList() {
             bg="white"
             placeholder="Seleccionar"
             _hover={{
-              bg: "lavender", 
-              borderColor: "purple.400", 
-              borderWidth: "2px", 
+              bg: "lavender",
+              borderColor: "purple.400",
+              borderWidth: "2px",
             }}
             _focus={{
-              bg: "white", 
-              borderColor: "purple.500", 
-              boxShadow: "none", 
+              bg: "white",
+              borderColor: "purple.500",
+              boxShadow: "none",
             }}
-            focusBorderColor="purple.500" 
+            focusBorderColor="purple.500"
           >
             <option value="all">Todas</option>
             <option value="completed">Completadas</option>
@@ -169,7 +170,7 @@ function TodoList() {
           onDelete={handleDelete}
         />
       </VStack>
-      
+
       <DeleteModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
