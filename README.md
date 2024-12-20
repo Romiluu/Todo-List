@@ -1,8 +1,26 @@
-# React + Vite
+# To Do List Project 📝
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una aplicación de gestión de tareas desarrollada en React que permite a los usuarios crear, filtrar y gestionar pendientes. Incluye funciones como agregar nuevas tareas, marcarlas como completadas, eliminarlas y filtrarlas (todas, completadas o pendientes).
+La aplicación almacena los datos en el navegador mediante localStorage, es responsive y utiliza Chakra UI para un diseño atractivo e intuitivo. Además, sigue prácticas modernas de React, con componentes modulares y estado sincronizado con localStorage.
 
-Currently, two official plugins are available:
+---
+## 🛠️ Funcionalidades principales
+- ➕ Agregar nuevas tareas.
+- Filtrar tareas:
+  - Todas las tareas.
+  - Tareas completadas.
+  - Tareas pendientes.
+- ✔️ Marcar tareas como completadas.
+- 🗑 Eliminar tareas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 💾 Almacenamiento
+- Utiliza localStorage para la persistencia de datos.
+- Refleja actualizaciones en tiempo real en el estado de la app y en localStorage.
+
+## 🔧 Herramientas y Tecnologías
+- React.js: Para construir la interfaz de usuario.
+- Chakra UI (versión 2): Para la librería de componentes y estilos.
+- localStorage: Para la persistencia de tareas.
+- Vercel: Para el despliegue.
+
+## 🚀 Recursos y herramientas necesarias
