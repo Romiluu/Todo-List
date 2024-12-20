@@ -1,5 +1,5 @@
 import TodoList from './components/TodoList';
-import Footer from "./components/Foot";
+import Footer from "./components/Footer";
 
 function App() {
 
