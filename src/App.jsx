@@ -1,13 +1,13 @@
-import Footer from "./components/footer";
+import TodoList from './components/TodoList';
+import Footer from "./components/Footer";
 
 function App() {
 
   return (
- 
       <div>
-      <Footer />
+        <TodoList />
+        <Footer />
       </div>
-
   )
 }
 
